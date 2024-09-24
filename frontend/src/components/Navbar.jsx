@@ -12,7 +12,7 @@ export default function Navbar() {
       };
   return (
    <>
-   <Edit item={null}closeModal={closeModal} />
+   <Edit item={''} closeModal={closeModal} />
     <div className="navbar bg-base-100 px-4 shadow-md">
       <div className="flex-1">
         <a className="btn btn-ghost normal-case text-xl">StockNest</a>

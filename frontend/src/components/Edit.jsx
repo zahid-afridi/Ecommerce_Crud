@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useState } from "react";
 
-export default function Edit({item, closeModal }) {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
+export default function Edit({ item, closeModal }) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
+ console.log(item?.id)
   const handleUpdate = (e) => {
     e.preventDefault();
     // Handle the update logic here
@@ -12,13 +13,14 @@ export default function Edit({item, closeModal }) {
     // Close the modal after updating
     closeModal();
   };
-  
-  console.log('itemid',item)
+
   return (
     <>
       <dialog id="my_modal_4" className="modal">
         <div className="modal-box w-11/12 max-w-2xl rounded-lg p-6">
-          <h3 className="font-bold text-xl mb-4">{item==null ? "Add Item":'Edit item'}</h3>
+          <h3 className="font-bold text-xl mb-4">
+            {item  ? "Edit Item" : "Add item"}
+          </h3>
           <form onSubmit={handleUpdate}>
             <div className="space-y-6">
               <div>
@@ -61,8 +63,16 @@ export default function Edit({item, closeModal }) {
               </div>
             </div>
             <div className="modal-action mt-6">
-              <button type="submit" className="btn btn-primary">Update</button>
-              <button type="button" className="btn btn-secondary" onClick={closeModal}>Close</button>
+              <button type="submit" className="btn btn-primary">
+                Update
+              </button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={closeModal}
+              >
+                Close
+              </button>
             </div>
           </form>
         </div>
