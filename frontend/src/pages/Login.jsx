@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { loginApi } from "../redux/query/Auth";
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
-  
+
   const navigate = useNavigate(); // Use useNavigate outside handleSubmit
-  
+  const dispatch = useDispatch();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -18,36 +19,22 @@ export default function Login() {
       password,
     };
 
-    try {
-      const response = await axios.post('http://localhost:5000/auth/Login', loginData);
-      
-      if (response.status === 200) {
-        // Handle successful login
-        setSuccess('Login Successful');
-        setError(null); // Clear error
-        console.log('Login Successful:', response.data);
-
-        // Redirect to another page after successful login
-        navigate('/');  // Replace '/dashboard' with your desired route
-      }
-    } catch (err) {
-      // Handle error response
-      setSuccess(null); // Clear success message
-      if (err.response) {
-        setError(err.response.data.message || 'Something went wrong');
-      } else {
-        setError('Network error or server is not responding');
-      }
-      console.log('Login Error:', err);
-    }
+    dispatch(loginApi(loginData, setSuccess, setError, navigate));
   };
 
   return (
     <>
       <section className="bg-gray-50 dark:bg-gray-900">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-            <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" />
+          <a
+            href="#"
+            className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
+          >
+            <img
+              className="w-8 h-8 mr-2"
+              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
+              alt="logo"
+            />
             StockNest
           </a>
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
@@ -57,7 +44,12 @@ export default function Login() {
               </h1>
               <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
                 <div>
-                  <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                  <label
+                    htmlFor="email"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Your email
+                  </label>
                   <input
                     type="email"
                     name="email"
@@ -70,7 +62,12 @@ export default function Login() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                  <label
+                    htmlFor="password"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Password
+                  </label>
                   <input
                     type="password"
                     name="password"
@@ -89,10 +86,16 @@ export default function Login() {
                   Sign in
                 </button>
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                  Don’t have an account yet? <Link to="/register" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</Link>
+                  Don’t have an account yet?{" "}
+                  <Link
+                    to="/register"
+                    className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                  >
+                    Sign up
+                  </Link>
                 </p>
               </form>
-              
+
               {success && <p className="text-green-500">{success}</p>}
               {error && <p className="text-red-500">{error}</p>}
             </div>
