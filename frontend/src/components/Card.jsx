@@ -13,7 +13,7 @@ export default function Card({item,HandleEdit}) {
         <figure>
           <img
             className="w-full h-48 object-cover"
-            src={item.imgUrl}
+            src={item.ImageUrl}
             alt="car"
           />
         </figure>

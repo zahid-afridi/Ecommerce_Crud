@@ -19,7 +19,7 @@ export default function Edit({ item, closeModal }) {
       <dialog id="my_modal_4" className="modal">
         <div className="modal-box w-11/12 max-w-2xl rounded-lg p-6">
           <h3 className="font-bold text-xl mb-4">
-            {item  ? "Edit Item" : "Add item"}
+            Edit Product
           </h3>
           <form onSubmit={handleUpdate}>
             <div className="space-y-6">

@@ -1,18 +1,19 @@
 import React from 'react';
 import img from '../assets/img.png'
 import Edit from './Edit';
+import AddProductModal from './AddProductModal';
 export default function Navbar() {
     const hanldeAdd=()=>{
         // alert('hello')
-    document.getElementById('my_modal_4').showModal();
+    document.getElementById('addProductModal').showModal();
 
     }
     const closeModal = () => {
-        document.getElementById('my_modal_4').close();
+        document.getElementById('addProductModal').close();
       };
   return (
    <>
-   <Edit item={''} closeModal={closeModal} />
+   <AddProductModal closeModal={closeModal}/>
     <div className="navbar bg-base-100 px-4 shadow-md">
       <div className="flex-1">
         <a className="btn btn-ghost normal-case text-xl">StockNest</a>
