@@ -21,28 +21,23 @@ const addProducts=async(req,res)=>{
 }
 const UpdateNotes=async(req,res)=>{
     try {
-        const userId=req.userId
-        const NotesId=req.params.id
-        const {title}=req.body
-        const FindeNotes= await NotesModel.findById({_id:NotesId})
-        if (!FindeNotes) {
-        res.status(404).json({success:false,message:"Notes not Found",})
+      
+        const ProductId=req.params.id
+        const {title,desc,ImageUrl}=req.body
+        const FindProduct= await ProductModal.findById({_id:ProductId})
+        if (!FindProduct) {
+        res.status(404).json({success:false,message:"Products not Found",})
             
         }
-      const NotesUserId=FindeNotes.userId.toString()
-      
-      if (userId.toString() !== NotesUserId) {
-       return res.status(404).json({success:false,message:"Unauthorized user",})
-        
-      }
-      console.log("NotesUserId",NotesUserId)
+   
+   
  
-        const UpdateNotes= await NotesModel.findByIdAndUpdate(
-            {_id:NotesId},
-            {title},{new:true}
+        const UpdateProduct= await ProductModal.findByIdAndUpdate(
+            {_id:ProductId},
+            {title,desc,ImageUrl},{new:true}
         )
-        console.log(FindeNotes)
-        res.status(200).json({success:true,message:"Notes Updates Successfully",UpdateNotes})
+        
+        res.status(200).json({success:true,message:"Product Updates Successfully",UpdateProduct})
 
     } catch (error) {
         console.log(error)
@@ -51,18 +46,18 @@ const UpdateNotes=async(req,res)=>{
 }
 const Delete=async(req,res)=>{
     try {
-        const userId=req.userId
-        const NotesId=req.params.id
-        const FindeNotes=await NotesModel.findById(NotesId)
+       
+        const ProductId=req.params.id
+        const FindProduct=await ProductModal.findById(ProductId)
 
-        if (userId.toString() !== FindeNotes.userId.toString()) {
-       return res.status(404).json({success:false,message:"Unauthorized user",})
+        if (!FindProduct) {
+       return res.status(404).json({success:false,message:"Product Not Found",})
             
         }
-        const Delete=await NotesModel.findByIdAndDelete(NotesId)
+        const Delete=await ProductModal.findByIdAndDelete(ProductId)
 
 
-              res.status(200).json({success:true,message:"Notes Deleted Successfully",Delete})
+              res.status(200).json({success:true,message:"Product deleted Deleted Successfully",Delete})
 
     } catch (error) {
         console.log(error)

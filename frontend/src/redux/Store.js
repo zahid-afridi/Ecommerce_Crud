@@ -14,7 +14,7 @@ import {
 const persistConfiq={
     key:"root",
     storage,
-    whitelist:["Auth"]
+    whitelist:["auth"]
 }
 const  persistedReducer=persistReducer(persistConfiq,rootReducer)
 export const store = configureStore({

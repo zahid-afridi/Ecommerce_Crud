@@ -10,9 +10,12 @@ export const  AuthSlice=createSlice({
     reducers:{
         setAuth:(state,action)=>{
             state.Auth=action.payload
+        },
+        logOut:(state)=>{
+            state.Auth=null
         }
     }
 })
 
-export const {setAuth}=AuthSlice.actions
+export const {setAuth,logOut}=AuthSlice.actions
 export default AuthSlice.reducer

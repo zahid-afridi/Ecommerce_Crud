@@ -2,7 +2,7 @@ import React from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import Edit from './Edit';
 
-export default function Card({item,HandleEdit}) {
+export default function Card({item,HandleEdit,handleDelete}) {
     // const HandleEdit=()=>{
     //     // document.getElementById('my_modal_4').showModal()
     // }
@@ -25,7 +25,7 @@ export default function Card({item,HandleEdit}) {
               <button className="btn btn-outline btn-sm flex items-center space-x-1 text-sm" onClick={HandleEdit}>
                 <FaEdit /> <span>Edit</span>
               </button>
-              <button className="btn btn-outline btn-error btn-sm flex items-center space-x-1 text-sm">
+              <button className="btn btn-outline btn-error btn-sm flex items-center space-x-1 text-sm" onClick={handleDelete}>
                 <FaTrash /> <span>Delete</span>
               </button>
             </div>

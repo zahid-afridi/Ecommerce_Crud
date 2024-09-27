@@ -2,18 +2,25 @@ import React from 'react';
 import img from '../assets/img.png'
 import Edit from './Edit';
 import AddProductModal from './AddProductModal';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logOut } from '../redux/slices/AuthSlice';
 export default function Navbar() {
+  const disptch=useDispatch()
+  const navigate = useNavigate(); // Use useNavigate outside handleSubmit
+
     const hanldeAdd=()=>{
         // alert('hello')
     document.getElementById('addProductModal').showModal();
 
     }
-    const closeModal = () => {
-        document.getElementById('addProductModal').close();
-      };
+    const handleNavigate=()=>{
+disptch(logOut())
+      navigate('/login')
+    }
+   
   return (
    <>
-   <AddProductModal closeModal={closeModal}/>
     <div className="navbar bg-base-100 px-4 shadow-md">
       <div className="flex-1">
         <a className="btn btn-ghost normal-case text-xl">StockNest</a>
@@ -39,7 +46,7 @@ export default function Navbar() {
               </a>
             </li>
             
-            <li><a>Logout</a></li>
+            <li onClick={handleNavigate}><a>Logout</a></li>
           </ul>
         </div>
       </div>

@@ -1,17 +1,41 @@
+import axios from "axios";
 import React, { useLayoutEffect, useState } from "react";
+import toast from "react-hot-toast";
 
-export default function Edit({ item, closeModal }) {
+export default function Edit({ item, closeModal,setStaterefersh }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 
- console.log(item?.id)
-  const handleUpdate = (e) => {
+ console.log('productid',item?._id)
+  const handleUpdate = async(e) => {
     e.preventDefault();
-    // Handle the update logic here
-    // console.log("Updated Item:", { title, description, imageUrl });
-    // Close the modal after updating
+    try {
+      if (item?._id) {
+        
+        const response= await axios.put(`http://localhost:5000/product/update/${item._id}`,{
+          title,desc:description,ImageUrl:imageUrl
+        })
+         
+      
+        const data=response.data
+        console.log('updae',data)
+        if (response.status==200) {
+          toast.success(data.message)
+          setTitle('')
     closeModal();
+
+          setDescription('')
+          setImageUrl('')
+          setStaterefersh((prev)=> !prev)
+          
+        }
+        console.log(data)
+      }
+    } catch (error) {
+      console.log(error)
+      
+    }
   };
 
   return (

@@ -1,17 +1,50 @@
+import axios from 'axios';
 import React, { useState } from 'react'
+import toast from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 
-export default function AddProductModal({closeModal}) {
+export default function AddProductModal({closeModal,setStaterefersh}) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [imageUrl, setImageUrl] = useState("");
+    const {Auth}=useSelector((state)=>state.auth)
   
-    const handleUpdate = (e) => {
+    const handleUpdate = async(e) => {
       e.preventDefault();
-      // Handle the update logic here
-      // console.log("Updated Item:", { title, description, imageUrl });
-      // Close the modal after updating
+            try {
+              if (Auth) {
+                
+                const response= await axios.post(`http://localhost:5000/product/create/${Auth._id}`,{
+                  title,desc:description,ImageUrl:imageUrl
+                })
+                 
+              
+                const data=response.data
+                if (response.status==200) {
+                  toast.success(data.message, {
+                    style: {
+                      zIndex: 999,
+                    },
+                  });
+                  
+                  setTitle('')
+                  setDescription('')
+                  setImageUrl('')
       closeModal();
+
+                  setStaterefersh((prev) => !prev)
+                }
+                console.log(data)
+              }
+            } catch (error) {
+              console.log(error)
+              if (error.response) {
+        alert(err.response.data.message || "Something went wrong");
+                
+              }
+            }
     };
+
   
     return (
       <>
@@ -63,7 +96,7 @@ export default function AddProductModal({closeModal}) {
               </div>
               <div className="modal-action mt-6">
                 <button type="submit" className="btn btn-primary">
-                  Update
+                  Upload
                 </button>
                 <button
                   type="button"

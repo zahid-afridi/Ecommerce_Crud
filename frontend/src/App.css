@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.modal{
+    z-index: -999px !important;
+}
+.modal-open .modal-box, .modal-toggle:checked + .modal .modal-box, .modal:target .modal-box, .modal[open] .modal-box{
+    z-index: -3px !important;
+}
